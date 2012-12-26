@@ -2,8 +2,12 @@ import igraph
 import random
 from numpy import Inf
 
+def write(text, verbose):
+    if verbose:
+        print text
+
 class Agent(object):
-    def __init__(self, cognitiveIdx = 1.0, n = 10, p=0.5, m = None, topology = 'ErdosRenyi'):
+    def __init__(self, cognitiveIdx = 1.0, n = 10, p=0.5, m = None, topology = 'Star'):
         self.graph = self.initializeGraph(n = n, p = p, m = m, topology = topology)
         self.cognitiveIdx = cognitiveIdx
 
@@ -23,8 +27,36 @@ class Agent(object):
             graph = igraph.Graph.Full(n=n)
         return graph
 
+    def chooseLowestEnergyInitialState(self, verbose=False):
+        write("Choosing where best to start", verbose)
+        best = 'Star'
+        for name, graph in self.getSampleGraphs():
+            newE, curE, change = self.proposeLeastEnergyGraph(graph)
+            write("{name}'s energy: {Eng}".format(name=name, Eng=newE), verbose)
+            if change:
+                best = name
+        write("The best option is {best}".format(best=best), verbose)
+
+    def proposeLeastEnergyGraph(self, newgraph):
+        currentE = self.energy()
+        oldgraph = self.graph.copy()
+        self.graph = newgraph
+        newE = self.energy()
+        if newE < currentE:
+            change = True
+        else:
+            change = False
+            self.graph = oldgraph
+        return newE, currentE, change
+
+    def getSampleGraphs(self):
+        n = self.graph.vcount()
+        yield 'Star', igraph.Graph.Star(n=n)
+        yield 'Full', igraph.Graph.Full(n=n)
+        yield 'ER'  , igraph.Graph.Erdos_Renyi(n=n, p=0.5)
+
     def energy(self):
-        return self.edgeOccupation() + self.cognitiveIdx * self.averagePathLength()
+        return self.graph.ecount() + self.cognitiveIdx * self.averagePathLength()
 
     def averagePathLength(self):
         if self.isConnected():

@@ -1,6 +1,6 @@
 import unittest
 from Agent import Agent
-from numpy import Inf, linspace
+from numpy import Inf
 
 class testAgent(unittest.TestCase):
     def setUp(self):
@@ -18,7 +18,7 @@ class testAgent(unittest.TestCase):
         self.assertGreater(self.agent.groupSize(), j)
 
     def testAddAndRemoveEdge(self):
-        agent = Agent(n=10, p = 0)
+        agent = Agent(n=10, p = 0, topology='ErdosRenyi')
         self.assertFalse(agent.graph.are_connected(0,1))
         agent.addEdge(0,1)
         self.assertTrue(agent.graph.are_connected(0,1))
@@ -56,8 +56,7 @@ class testAgent(unittest.TestCase):
     def testEdgeOccupation(self):
         n = 10
         for m in xrange(0, 10, 1):
-            print "m: ", m
-            agent = Agent(n = n, m = m)
+            agent = Agent(n = n, m = m, topology='ErdosRenyi')
             p = float(m)/float(n * (n-1)/2)
             self.assertEqual(agent.edgeOccupation(), p)
 
