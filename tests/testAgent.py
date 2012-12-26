@@ -28,3 +28,9 @@ class testAgent(unittest.TestCase):
         agent = Agent(n=10, p =0)
         agent.pluckEdge(1,2)
 
+    def testPluckTillConnected(self):
+        self.agent.pluckTillConnected()
+
+
+
+
