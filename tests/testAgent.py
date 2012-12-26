@@ -29,7 +29,9 @@ class testAgent(unittest.TestCase):
         agent.pluckEdge(1,2)
 
     def testPluckTillConnected(self):
+        agent = Agent(n=10, p=0.5)
         self.agent.pluckTillConnected()
+        self.assertTrue(agent.isConnected())
 
 
 

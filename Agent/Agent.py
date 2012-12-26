@@ -12,6 +12,9 @@ class Agent(object):
         (i,j) = self.getRandomVertexPair()
         self.pluckEdge(i,j)
 
+    def pluckTillConnected(self):
+        pass
+
     def getRandomVertexPair(self):
         n = self.graph.vcount()
         return random.sample(xrange(n),2)
