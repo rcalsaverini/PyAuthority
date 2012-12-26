@@ -28,11 +28,13 @@ class testAgent(unittest.TestCase):
         agent = Agent(n=10, p =0)
         agent.pluckEdge(1,2)
 
-    def testPluckTillConnected(self):
-        agent = Agent(n=10, p=0.5)
-        self.agent.pluckTillConnected()
+    def testPluckTillConnectedEmpty(self):
+        agent = Agent(n=10, p=0.0)
+        agent.pluckTillConnected()
         self.assertTrue(agent.isConnected())
 
-
-
+    def testPluckTillConnectedStar(self):
+        agent = Agent(n=20, topology='Star')
+        agent.pluckTillConnected()
+        self.assertTrue(agent.isConnected)
 
