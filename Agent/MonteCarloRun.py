@@ -27,7 +27,7 @@ class MonteCarloRun(MonteCarloAgent):
 
 def processArgumentsAndRun():
     parser = argparse.ArgumentParser(prog = "runAuthorityMCMC")
-    parser.add_argument('numAgents', type=float)
+    parser.add_argument('numAgents', type=int)
     parser.add_argument('normalizedBrainCapacity', type=float)
     parser.add_argument('ecologicalPressure', type=float)
     parser.add_argument('burnInSteps', type=int)
