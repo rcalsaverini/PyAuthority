@@ -3,12 +3,11 @@ from numpy import exp
 from numpy.random import uniform
 
 class MonteCarloAgent(Agent):
-    def __init__(self, n = 10, a = 1.0, beta = 1.0, observables = {}):
+    def __init__(self, n = 10, a = 1.0, beta = 1.0):
         alpha = float(n * (n-1)/2) * a
         super(MonteCarloAgent, self).__init__(n=10, topology='Star', cognitiveIdx = alpha)
         self.chooseLowestEnergyInitialState()
         self.beta = beta
-        self.observables = observables
         self.oldGraph = self.graph.copy()
 
     def metropolisStep(self):
@@ -31,8 +30,4 @@ class MonteCarloAgent(Agent):
         p = exp(-dE * self.beta)
         return uniform() < p
 
-    def calculateObservables(self):
-        values = {}
-        for name, function in self.observables.iteritems():
-            values[name] = function(self)
-        return values
+
