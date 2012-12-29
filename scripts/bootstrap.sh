@@ -9,5 +9,10 @@ cd igraph-0.6
 make
 sudo make install
 
-cd python-igraph-0.6
+cd ../python-igraph-0.6
+sudo python setup.py install
+
+cd ..
+git clone git://github.com/rcalsaverini/PyAuthority.git
+cd PyAuthority
 sudo python setup.py install
