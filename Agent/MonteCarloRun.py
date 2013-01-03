@@ -1,6 +1,7 @@
 from MonteCarloAgent import MonteCarloAgent
 from numpy import mean
 import argparse
+import sys
 
 class MonteCarloRun(MonteCarloAgent):
 
@@ -25,6 +26,24 @@ class MonteCarloRun(MonteCarloAgent):
         for name, function in zip(self.observableNames, self.observableFunctions):
             yield name, function
 
+
+def readInput(filein):
+    for line in filein:
+        numAgents, alpha, beta, burnIn, mcSteps, thin = line.split()
+        yield int(numAgents), float(alpha), float(beta), int(burnIn), int(mcSteps), int(thin)
+
+
+def readFromStdinAndRun():
+    for n, alpha, beta, burnIn, mcSteps, thin in readInput(sys.stdin):
+        if thin < 1:
+            thin = 1
+        mcmc = MonteCarloRun(n = n, a = alpha, beta = beta)
+        for results in mcmc.runSimulation(burn = burnIn, steps = mcSteps, thin = thin):
+            line = '\t'.join(["{value}".format(value = value) for (_, value) in results])
+            print n,'\t', alpha,'\t', beta,'\t', line
+
+
+
 def processArgumentsAndRun():
     parser = argparse.ArgumentParser(prog = "runAuthorityMCMC")
     parser.add_argument('numAgents', type=int)
@@ -41,5 +60,5 @@ def processArgumentsAndRun():
 
 
 if __name__ == '__main__':
-    processArgumentsAndRun()
+    readFromStdinAndRun()
 

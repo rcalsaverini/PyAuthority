@@ -14,5 +14,7 @@ setup(
             "python-igraph",
             "numpy"
             ],
-        entry_points = { 'console_scripts' : ["runAuthorityMCMC= Agent:processArgumentsAndRun" ]},
+        entry_points = { 'console_scripts' : ["runAuthorityMCMC= Agent:processArgumentsAndRun" ,
+                                              "runMCMCParsFromStdin = Agent:readFromStdinAndRun"
+                                             ]},
         )
