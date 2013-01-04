@@ -39,8 +39,9 @@ def readFromStdinAndRun():
             thin = 1
         mcmc = MonteCarloRun(n = n, a = alpha, beta = beta)
         for results in mcmc.runSimulation(burn = burnIn, steps = mcSteps, thin = thin):
-            line = '\t'.join(["{value}".format(value = value) for (_, value) in results])
-            print n,'\t', alpha,'\t', beta,'\t', line
+            toPrint = dict(results)
+            toPrint.update({'n': n, 'a': alpha, 'beta': beta})
+            print "{n} {a} {beta} {energy} {avgDegree} {maxDegree} {acceptance}".format(**toPrint)
 
 
 
