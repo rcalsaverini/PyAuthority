@@ -3,7 +3,7 @@ import os
 
 s3 = boto.connect_s3('AKIAINVE7PR5AJ5UJBBA', 'W8xugFQDxiypK/wgjSkpZ/n3eAHD83QzXy0LY6We')
 bucket = s3.lookup('doutorado')
-dirs = ['avgResults', 'percentile05', 'percentile95', 'resultCount', 'stddevResults']
+dirs = ['results'] #['avgResults', 'percentile05', 'percentile95', 'resultCount', 'stddevResults']
 
 def downloadBucketFolder(bucket, dirname = 'avgResults', destination = '../results/'):
     keys = bucket.list(prefix = dirname)
